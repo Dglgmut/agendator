@@ -1,0 +1,13 @@
+.panel.panel-default
+  .panel-heading Próximos Agendamentos
+  %table.table
+    %tr
+      %th Horario
+      - next_days do |day|
+        %th= day
+    - hours_range do |hour|
+      %tr
+        %td= hour
+        - next_days do |day|
+          %td= day
+

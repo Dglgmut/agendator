@@ -2,6 +2,7 @@
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f|
     %h3 Sign up
     = devise_error_messages!
+    = link_to 'Sign In', new_user_session_path, class: "right"
     .form-group
       = f.label :name
       = f.text_field :name, :autofocus => true, class: 'form-control'

@@ -3,6 +3,7 @@
     <h3>Forgot your password?</h3>
     <p>We'll send password reset instructions.</p>
     <%= devise_error_messages! %>
+    <%= link_to 'Sign In', new_user_session_path, class: "right"%>
     <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
