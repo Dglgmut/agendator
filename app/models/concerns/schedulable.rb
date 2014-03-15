@@ -16,7 +16,7 @@ module Schedulable
   private
     def other_schedule_at_same_time?
         Reservation.where("date_trunc('hour', scheduled_at) = ? AND id <> ?",
-                          scheduled_at.strftime('%F %H:00:00'), id).any?
+                          scheduled_at.strftime('%F %H:00:00'), id || -1).any?
     end
 
     def scheduled_at_cannot_be_at_same_hour_of_day
