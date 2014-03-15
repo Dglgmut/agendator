@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :name, :presence => true
+  validates :name, :format => { :with => /\A([A-Z]|[a-z]|\s)+\Z/ }
 end
