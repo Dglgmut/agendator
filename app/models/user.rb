@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :name, :format => { :with => /\A([A-Z]|[a-z]|\s)+\Z/ }
+
+  def first_name
+    name[/\A\w+/]
+  end
 end

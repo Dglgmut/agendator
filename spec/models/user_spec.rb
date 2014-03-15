@@ -18,6 +18,9 @@ describe User do
   end
 
   describe ".first_name" do
-    it "is the first word from a name"
+    let(:user) {FactoryGirl.create(:user, name: "test tes te")}
+    it "is the first word from a name" do
+      expect(user.first_name).to eq "test"
+    end
   end
 end
