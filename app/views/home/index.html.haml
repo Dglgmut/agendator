@@ -1,13 +1,14 @@
-.panel.panel-default
-  .panel-heading Próximos Agendamentos
-  %table.table
-    %tr
-      %th Horario
-      - next_days do |day|
-        %th= day
-    - hours_range do |hour|
+.panel
+  %table.table.table-boarded.table-hover
+    %thead
       %tr
-        %td= hour
+        %th Horario
         - next_days do |day|
-          %td= day
+          %th= day
+    %tbody
+      - hours_range do |hour|
+        %tr
+          %td= hour
+          - next_days do |day|
+            %td{"data-datetimerecord" => "#{day} #{hour}"} Reservar
 
