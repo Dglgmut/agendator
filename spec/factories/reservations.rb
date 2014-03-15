@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :user do
-    email "test@test.com"
-    password "12345678"
-    name "test tes te"
+  factory :reservation do
+    scheduled_at "2014-03-15 09:19:25"
+    canceled false
+    user nil
   end
 end

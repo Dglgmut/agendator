@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User do
+  let(:user) {FactoryGirl.create(:user)}
+
   describe "name" do
     it { should validate_presence_of :name }
     it { should allow_value("Teste", "teste").for(:name)}
@@ -18,9 +20,13 @@ describe User do
   end
 
   describe ".first_name" do
-    let(:user) {FactoryGirl.create(:user, name: "test tes te")}
     it "is the first word from a name" do
       expect(user.first_name).to eq "test"
     end
   end
+
+  describe ".reservations" do
+    it {should have_many :reservations}
+  end
+
 end

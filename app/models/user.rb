@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :reservations
+
   validates :name, :presence => true
   validates :name, :format => { :with => /\A([A-Z]|[a-z]|\s)+\Z/ }
 
