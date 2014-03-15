@@ -13,7 +13,10 @@ describe Reservation do
     let(:reservation_before_6_am) {FactoryGirl.build(:reservation, scheduled_at: Time.zone.parse("05:30") + 1.day)}
 
     it {should validate_presence_of :scheduled_at}
-    it {should validate_uniqueness_of :scheduled_at}
+
+    it "must be unique" do
+      expect(FactoryGirl.build(:reservation, scheduled_at: reservation)).to have(1).errors_on(:scheduled_at)
+    end
 
     it "must be set after `timenow` on create" do
       expect(reservation_from_one_hour_ago).to have(1).errors_on(:scheduled_at)
@@ -22,6 +25,14 @@ describe Reservation do
 
     it "must be set between 6am and 11pm" do
       expect(reservation_before_6_am).to have(1).errors_on(:scheduled_at)
+    end
+
+    it 'must select reservations from next week' do
+      FactoryGirl.create(:reservation, canceled: true) #0
+      FactoryGirl.create(:reservation, scheduled_at: 7.days.from_now) #0
+      FactoryGirl.build(:reservation, scheduled_at: 2.hours.ago).save(validate: false) #1
+      FactoryGirl.create(:reservation, scheduled_at: 6.days.from_now) #2
+      expect(Reservation.count).to eq 2
     end
   end
 
