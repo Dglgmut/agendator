@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe Reservation do
   let(:reservation) {FactoryGirl.create(:reservation)}
+
   describe ".user" do
     it {should belong_to :user}
+    it {should validate_presence_of :user}
   end
 
   describe "scheduled_at" do
@@ -20,6 +22,14 @@ describe Reservation do
 
     it "must be set between 6am and 11pm" do
       expect(reservation_before_6_am).to have(1).errors_on(:scheduled_at)
+    end
+  end
+
+  describe "canceled" do
+    it "must be cancelable" do
+      expect(reservation.cancel).to be_true
+      expect(Reservation.count).to eq 0
+      expect(Reservation.canceled.count).to eq 1
     end
   end
 end
