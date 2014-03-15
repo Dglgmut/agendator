@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :reservation do
-    scheduled_at "2014-03-15 09:19:25"
+    scheduled_at 1.hour.from_now
     canceled false
-    user nil
+    user
   end
 end
