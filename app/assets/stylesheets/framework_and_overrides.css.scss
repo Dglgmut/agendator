@@ -1,6 +1,12 @@
 // import the CSS framework
 @import "bootstrap";
 
+.logo {
+  position: absolute;
+  left: 41%;
+  top: -15px;
+}
+
 // make all images responsive by default
 img {
   @extend .img-responsive;
@@ -10,6 +16,9 @@ img {
 .navbar-brand {
   font-size: inherit;
   }
+.nav {
+  float: right;
+}
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
@@ -46,6 +55,10 @@ section {
   @extend .row;
   margin-top: 20px;
   }
+td {
+  border-right: 1px #ddd solid;
+  width: 150px;
+}
 
 // Styles for Devise views
 // using Bootstrap
