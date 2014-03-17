@@ -1,6 +1,8 @@
 require 'spec_helper'
 
+
 describe Reservation do
+  before { Timecop.freeze(DEFAULT_TIME_FOR_RESERVATION) }
   let(:reservation) {FactoryGirl.create(:reservation)}
 
   describe ".user" do
@@ -41,6 +43,16 @@ describe Reservation do
       expect(reservation.cancel).to be_true
       expect(Reservation.count).to eq 0
       expect(Reservation.canceled.count).to eq 1
+    end
+  end
+
+  describe ".to_hash_with_user_name" do
+    it "must show the reservation name, id and scheduled_at with proper format" do
+      user = reservation.user
+      expect(Reservation.hash_with_user_name).to eq([{name: user.first_name,
+                                                      id: reservation.id,
+                                                      scheduled_at: reservation.scheduled_at.strftime("%F %H:00")
+                                                   }])
     end
   end
 end
