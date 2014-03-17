@@ -27,6 +27,11 @@ describe User do
 
   describe ".reservations" do
     it {should have_many :reservations}
+    it "must be deleted with the user" do
+      reservation = FactoryGirl.create(:reservation, user: user)
+      user.destroy
+      expect(Reservation.where(id: reservation.id)).to be_empty
+    end
   end
 
 end

@@ -4,7 +4,7 @@ module Schedulable
   included do
     default_scope { where("scheduled_at >= ? AND scheduled_at <= ?",
                      Time.now.beginning_of_day,
-                     Time.now + 6.days) }
+                     Time.now.beginning_of_day + 7.days) }
 
     validates :scheduled_at, :presence => true
     validate :scheduled_at_cannot_be_in_the_past,
