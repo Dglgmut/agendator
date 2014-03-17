@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe HomeController do
-
+  before {request.cookies[:first_time] = true}
   describe "#index" do
     context "when I am not logged in" do
       before { get :index }

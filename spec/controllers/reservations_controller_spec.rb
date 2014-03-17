@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ReservationsController do
+  before {request.cookies[:first_time] = true}
   before { Timecop.freeze(DEFAULT_TIME_FOR_RESERVATION) }
 
   context "logged user" do
