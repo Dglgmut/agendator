@@ -12,7 +12,7 @@ gem 'devise'
 gem 'haml-rails'
 gem 'pg'
 gem 'puma'
-gem 'therubyracer', :platform=>:ruby
+gem 'rails_12factor', group: :production
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
