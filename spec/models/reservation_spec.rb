@@ -51,7 +51,7 @@ describe Reservation do
       user = reservation.user
       expect(Reservation.hash_with_user_name).to eq([{name: user.first_name,
                                                       id: reservation.id,
-                                                      scheduled_at: reservation.scheduled_at.strftime("%F %H:00")
+                                                      scheduled_at: reservation.scheduled_at.strftime("%d-%m-%Y %H:00")
                                                    }])
     end
   end

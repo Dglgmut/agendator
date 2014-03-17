@@ -11,7 +11,7 @@ class Reservation < ActiveRecord::Base
       {
         id: reservation.id,
         name: reservation.user.first_name,
-        scheduled_at: reservation.scheduled_at.strftime("%F %H:00")
+        scheduled_at: reservation.scheduled_at.strftime("%d-%m-%Y %H:00")
       }
     end
   end

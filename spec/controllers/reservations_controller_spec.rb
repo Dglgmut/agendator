@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe ReservationsController do
+  before { Timecop.freeze(DEFAULT_TIME_FOR_RESERVATION) }
+
   context "logged user" do
     before { login_user }
     let(:response_json) { JSON.parse(response.body) }
@@ -11,7 +13,7 @@ describe ReservationsController do
       it { should respond_with 200 }
       it "must return a json with the next reservations" do
         expect(response_json[0]["id"]).to eq Reservation.last.id
-        expect(response_json[0]["name"]).to eq Reservation.last.user.name
+        expect(response_json[0]["name"]).to eq Reservation.last.user.first_name
       end
     end
 

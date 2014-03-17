@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   def index
-    render json: Reservation.with_user_name
+    render json: Reservation.hash_with_user_name
   end
 
   def create
@@ -8,7 +8,7 @@ class ReservationsController < ApplicationController
                                     user: current_user,
                                     canceled: false)
     if reservation.save
-      render json: {id: reservation.id, name: current_user.name}, status: 200
+      render json: {id: reservation.id, name: current_user.first_name}, status: 200
     else
       render json: {error_messages: reservation.errors.messages}, status: 403
     end

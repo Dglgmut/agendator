@@ -7,7 +7,7 @@ schedule_reservation = (scheduled_at)->
     error: (jqXHR, textStatus, errorThrown) ->
       show_error_message(jqXHR)
     success: (data, textStatus, jqXHR)->
-      fill_schedule(scheduled_at, data["name"])
+      fill_schedule(scheduled_at, data["name"], data["id"])
 
 list_reservations = ->
   $.ajax '/reservations',
@@ -16,13 +16,49 @@ list_reservations = ->
     error: (jqXHR, textStatus, errorThrown) ->
       show_error_message(jqXHR)
     success: (data, textStatus, jqXHR)->
-      console.log(data)
       for schedule in data
-        fill_schedule(schedule["scheduled_at"], schedule["name"])
+        fill_schedule(schedule.scheduled_at, schedule.name, schedule.id)
+
+cancel_reservation = (reservation)->
+  reservation_id = $(reservation).data("reservation_id")
+  $.ajax "/reservations/#{reservation_id}/cancel",
+    type: 'POST'
+    dataType: 'json'
+    error: (jqXHR, textStatus, errorThrown) ->
+      show_error_message(jqXHR)
+    success: (data, textStatus, jqXHR)->
+      remove_cancelation_link(reservation)
+
 
 #Helpers
-fill_schedule = (scheduled_at, name)->
-  $("[data-datetimerecord='#{scheduled_at}']").html(name)
+fill_schedule = (scheduled_at, name, reservation_id)->
+  element = $("[data-datetimerecord='#{scheduled_at}']")
+  element.html(name)
+  add_cancelation_link(element, reservation_id)
+
+add_cancelation_link = (element, reservation_id)->
+  $(element).data("reservation_id", reservation_id)
+  $(element).data("old_html", $(element).html())
+  $(element).data("hover_html", "click to cancel")
+  $(element).hover (->
+    $(this).html($(this).data("hover_html"))
+    $(this).unbind "click"
+    $(this).bind "click.cancelationLink", ->
+      cancel_reservation(this)
+  ), ->
+    $(this).html($(this).data("old_html"))
+    add_schedule_reservation_link(this)
+
+remove_cancelation_link = (element) ->
+  $(element).html ""
+  $(element).data "old_html", ""
+  $(element).unbind 'mouseenter mouseleave'
+  add_schedule_reservation_link(element)
+
+add_schedule_reservation_link = (element) ->
+  $(element).unbind "click.cancelationLink"
+  $(element).bind "click", ->
+    schedule_reservation($(element).data('datetimerecord'))
 
 show_error_message = (jqXHR)->
   error_messages = jqXHR.responseJSON["error_messages"]
@@ -35,5 +71,5 @@ $(document).ready ->
   list_reservations()
 
   #when an user wants to schedule:
-  $("[data-datetimerecord]").click ->
-    schedule_reservation($(this).data('datetimerecord'))
+  $("[data-datetimerecord]").each ->
+    add_schedule_reservation_link(this)
