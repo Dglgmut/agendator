@@ -34,6 +34,7 @@ cancel_reservation = (reservation)->
 fill_schedule = (scheduled_at, name, reservation_id)->
   element = $("[data-datetimerecord='#{scheduled_at}']")
   element.html(name)
+  $(element).unbind "click"
   add_cancelation_link(element, reservation_id)
 
 add_cancelation_link = (element, reservation_id)->
