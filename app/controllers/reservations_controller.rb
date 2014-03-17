@@ -8,7 +8,7 @@ class ReservationsController < ApplicationController
                                     user: current_user,
                                     canceled: false)
     if reservation.save
-      render json: {id: reservation.id}, status: 200
+      render json: {id: reservation.id, name: current_user.name}, status: 200
     else
       render json: {error_messages: reservation.errors.messages}, status: 403
     end

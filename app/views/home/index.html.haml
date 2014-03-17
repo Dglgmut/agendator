@@ -2,7 +2,7 @@
   %table.table.table-boarded.table-hover
     %thead
       %tr
-        %th Horario
+        %th Schedule
         - next_days do |day|
           %th= day
     %tbody
@@ -10,5 +10,5 @@
         %tr
           %td= hour
           - next_days do |day|
-            %td{"data-datetimerecord" => "#{day} #{hour}"} Reservar
+            %td.small{"data-datetimerecord" => "#{day} #{hour}"} Free to schedule
 
